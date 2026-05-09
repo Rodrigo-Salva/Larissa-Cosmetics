@@ -1,0 +1,251 @@
+---
+// Modal component — controlled via JS
+---
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="Detalle del producto">
+  <div class="modal" id="modal">
+
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <div class="modal-img-col" id="modalImgWrap"></div>
+
+    <div class="modal-content-col">
+      <span class="modal-cat" id="modalCat"></span>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <p class="modal-desc" id="modalDesc"></p>
+
+      <div class="modal-meta">
+        <div class="meta-item">
+          <div class="meta-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+            Volumen
+          </div>
+          <div class="meta-value" id="modalVol"></div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            Tipo
+          </div>
+          <div class="meta-value" id="modalTipo"></div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Ingredientes
+          </div>
+          <div class="meta-value" id="modalIngredientes"></div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Categoría
+          </div>
+          <div class="meta-value" id="modalCatFull"></div>
+        </div>
+      </div>
+
+      <div class="modal-tags" id="modalTags"></div>
+
+      <div class="modal-price-row">
+        <div>
+          <div class="modal-price" id="modalPrice"></div>
+          <small>Precio en Soles</small>
+        </div>
+        <a id="modalWA" class="btn-wa" href="#" target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.523 5.845L.057 23.571a.75.75 0 00.918.899l5.9-1.516A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.686-.493-5.23-1.357l-.374-.213-3.882.997 1.033-3.77-.234-.387A9.959 9.959 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+          </svg>
+          Pedir por WhatsApp
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15, 5, 25, 0.65);
+  z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 280ms ease;
+  backdrop-filter: blur(6px);
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  position: relative;
+  background: var(--color-surface);
+  border-radius: 28px;
+  width: 100%;
+  max-width: 780px;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(30,10,42,.28), 0 0 0 1px rgba(122,52,148,.1);
+  transform: translateY(24px) scale(.96);
+  transition: transform 320ms cubic-bezier(.16,1,.3,1);
+}
+.modal-overlay.open .modal { transform: translateY(0) scale(1); }
+
+/* Close button */
+.modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  z-index: 10;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-muted);
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  transition: background var(--transition), color var(--transition), transform var(--transition);
+}
+.modal-close:hover { background: #fff; color: var(--color-primary); transform: scale(1.1); }
+
+/* Image column */
+.modal-img-col {
+  width: 280px;
+  flex-shrink: 0;
+  background: linear-gradient(160deg, var(--color-primary-light), #f3e8ff);
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-img-col img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+/* Content column */
+.modal-content-col {
+  flex: 1;
+  padding: 32px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.modal-cat {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-tag-bg);
+  color: var(--color-tag-text);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  width: fit-content;
+}
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+  margin: 0;
+}
+.modal-desc {
+  font-size: 0.825rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Meta grid */
+.modal-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: var(--color-surface-offset, #f7f0fc);
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+.meta-item { display: flex; flex-direction: column; gap: 3px; }
+.meta-label {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 0.6rem; color: var(--color-text-faint);
+  font-weight: 700; text-transform: uppercase; letter-spacing: .07em;
+}
+.meta-value { font-size: 0.78rem; color: var(--color-text); font-weight: 600; }
+
+/* Tags */
+.modal-tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 0; }
+.card-tag {
+  font-size: 0.62rem; font-weight: 600;
+  background: var(--color-tag-bg); color: var(--color-tag-text);
+  padding: 3px 10px; border-radius: 999px;
+}
+
+/* Price row */
+.modal-price-row {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-divider);
+}
+.modal-price {
+  font-family: var(--font-display);
+  font-size: 1.6rem; font-weight: 700;
+  color: var(--color-primary);
+}
+small { font-size: 0.65rem; color: var(--color-text-muted); display: block; margin-top: 1px; }
+
+/* WA button */
+.btn-wa {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #25d366; color: #fff;
+  font-size: 0.78rem; font-weight: 700;
+  padding: 10px 18px; border-radius: 999px;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(37,211,102,.35);
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  flex-shrink: 0;
+}
+.btn-wa:hover { background: #1fb85a; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,211,102,.45); }
+
+/* Tablet: imagen más estrecha */
+@media (max-width: 900px) {
+  .modal { max-width: 640px; }
+  .modal-img-col { width: 220px; }
+}
+
+/* Mobile: flotante centrado, imagen arriba, scroll interno */
+@media (max-width: 600px) {
+  .modal-overlay { padding: 16px; align-items: center; }
+  .modal {
+    flex-direction: column;
+    border-radius: 24px;
+    max-height: 88dvh;
+    overflow-y: auto;
+    width: 100%;
+  }
+  .modal-img-col { width: 100%; height: 190px; flex-shrink: 0; }
+  .modal-content-col { padding: 16px 16px 22px; gap: 7px; }
+  .modal-title { font-size: 1.05rem; }
+  .modal-desc { -webkit-line-clamp: 2; font-size: 0.78rem; }
+  .modal-meta { padding: 10px 12px; gap: 6px; }
+  .meta-value { font-size: 0.72rem; }
+  .modal-price { font-size: 1.25rem; }
+  .btn-wa { font-size: 0.72rem; padding: 9px 13px; gap: 6px; }
+  .modal-price-row { gap: 8px; }
+  .modal-close { top: 10px; right: 10px; width: 30px; height: 30px; }
+}
+</style>

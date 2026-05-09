@@ -1,0 +1,271 @@
+---
+
+---
+
+<header class="navbar">
+  <div class="nav-inner container">
+    <a href="#" class="nav-logo">
+      <!-- <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="16" fill="#7a3494"></circle>
+        <path
+          d="M10 24L16 8L22 24"
+          stroke="white"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+        <path
+          d="M12.5 19.5H19.5"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"></path>
+        <circle cx="16" cy="8" r="2.2" fill="#d155a2"></circle>
+      </svg> -->
+      <span class="nav-brand">Larissa Cosmetics</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#" class="nav-link active">Inicio</a>
+      <a href="#catalogo" class="nav-link">Catálogo</a>
+      <a href="#contacto" class="nav-link">Contacto</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button
+        class="nav-icon-btn nav-burger"
+        id="navBurger"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="navMobile"
+      >
+        <svg
+          class="icon-burger"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+          <line x1="3" y1="6" x2="21" y2="6"></line><line
+            x1="3"
+            y1="12"
+            x2="21"
+            y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <svg
+          class="icon-close"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          style="display:none"
+        >
+          <path d="M18 6L6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu drawer -->
+  <nav
+    class="nav-mobile"
+    id="navMobile"
+    aria-label="Menú móvil"
+    aria-hidden="true"
+  >
+    <a href="#" class="nav-mobile-link" data-close>Inicio</a>
+    <a href="#catalogo" class="nav-mobile-link" data-close>Catálogo</a>
+    <a href="#contacto" class="nav-mobile-link" data-close>Contacto</a>
+  </nav>
+</header>
+
+<style>
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(253, 248, 251, 0.94);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    height: 64px;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+  .nav-brand {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  /* Desktop nav links */
+  .nav-links {
+    display: flex;
+    gap: var(--space-6);
+    margin-left: auto;
+  }
+  .nav-link {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: color var(--transition);
+  }
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--color-primary);
+  }
+  .nav-link.active {
+    font-weight: 600;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .nav-links + .nav-actions {
+    margin-left: 0;
+  }
+
+  .nav-icon-btn {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    transition:
+      background var(--transition),
+      color var(--transition);
+  }
+  .nav-icon-btn:hover {
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+  }
+
+  .nav-wa-btn {
+    color: #25d366;
+  }
+  .nav-wa-btn:hover {
+    background: rgba(37, 211, 102, 0.1);
+    color: #1fb85a;
+  }
+
+  /* Hamburger — hidden on desktop */
+  .nav-burger {
+    display: none;
+  }
+
+  /* Mobile menu drawer */
+  .nav-mobile {
+    display: none;
+    flex-direction: column;
+    padding: 6px 0 14px;
+    border-top: 1px solid var(--color-border);
+    background: rgba(253, 248, 251, 0.98);
+    animation: slideDown 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .nav-mobile.open {
+    display: flex;
+  }
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .nav-mobile-link {
+    padding: 13px 20px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition:
+      color var(--transition),
+      background var(--transition);
+    border-radius: 0;
+  }
+  .nav-mobile-link:hover {
+    color: var(--color-primary);
+    background: var(--color-primary-light);
+  }
+  .nav-mobile-wa {
+    margin: 10px 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    background: #25d366;
+    color: #fff;
+    padding: 11px 16px;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+    .nav-burger {
+      display: flex;
+    }
+    .nav-actions {
+      margin-left: auto !important;
+    }
+  }
+</style>
+
+<script>
+  const burger = document.getElementById("navBurger");
+  const menu = document.getElementById("navMobile");
+
+  function openMenu(open: boolean) {
+    menu?.classList.toggle("open", open);
+    burger?.setAttribute("aria-expanded", String(open));
+    menu?.setAttribute("aria-hidden", String(!open));
+    const iconB = burger?.querySelector(".icon-burger") as HTMLElement;
+    const iconC = burger?.querySelector(".icon-close") as HTMLElement;
+    if (iconB) iconB.style.display = open ? "none" : "";
+    if (iconC) iconC.style.display = open ? "" : "none";
+  }
+
+  burger?.addEventListener("click", () => {
+    const isOpen = menu?.classList.contains("open");
+    openMenu(!isOpen);
+  });
+
+  menu
+    ?.querySelectorAll("[data-close]")
+    .forEach((link) => link.addEventListener("click", () => openMenu(false)));
+
+  document.getElementById("navSearchBtn")?.addEventListener("click", () => {
+    openMenu(false);
+    document.getElementById("catalogo")?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(
+      () =>
+        (document.getElementById("searchInput") as HTMLInputElement)?.focus(),
+      350,
+    );
+  });
+</script>
